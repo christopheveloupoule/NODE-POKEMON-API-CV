@@ -9,9 +9,10 @@ app.get('/', (req, res) => res.send('Hello, Express 👋!'))
 //Notre 1er poitn de terminaison definit
 //METHOD de la req GET qui va prendre en param 2 elements...
 
-app.get('/api/pokemons/:id', (req, res) => {
+app.get('/api/pokemons/:id/:name', (req, res) => {
     const id = req.params.id //recupere l'id ds l'url & send la res au client
-    res.send(`Vous avez demandé le pokémon n°${id}`)
+    const name = req.params.name
+    res.send(`Le pokemon n°${id} est ${name}`)
 })
   
 app.listen(port, () => 
