@@ -18,7 +18,7 @@ app.get('/', (req, res) => res.send('Hello, Express 👋!'))
 })*/
 
 app.get('/api/pokemons/:id', (req, res) => {
-    const id = req.params.id //recupere l'id ds l'url & send la res au client
+    const id = parseInt(req.params.id) //recupere l'id ds l'url & send la res au client
     const pokemon = pokemons.find(pokemon => pokemon.id === id) //METHOD find pr recup un pokemon
     res.send(`Vous avez demandé Le pokemon ${pokemon.name}`)
   })
