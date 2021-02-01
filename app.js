@@ -5,6 +5,7 @@ const express = require('express')
 const morgan = require('morgan') //Import du middleWare morgan
 const favicon = require('serve-favicon') //Import du middleWare serve-favicon
 const bodyParser = require('body-parser') //Import du middleWare body-parser
+const { Sequelize } = require('sequelize')
 
 //const helper = require('helper.js') //import du module helper
 const { success, getUniqueId } = require('./helper.js') //desctruturat°
@@ -33,6 +34,25 @@ app.use(logger)*/
 //npm install morgan --save-dev
 //npm install serve-favicon --save puis import du fichier favicon.ico
 
+//Creer & configurer une instance de la classe "sequelize"
+//Connexion à la DB, on s'en sert pr la suite ds notre code
+//4param passé au construct de sequelize
+const sequelize = new Sequelize('pokedex', 'root', '', { //DB+id+PWD
+    host: 'localhost', // ou se trouve la DB sr notre machine
+    dialect: 'mariadb', //Nm du DRIVER pr permettre à Sequelize d'interag avc notre DB
+    dialectOptions: {
+      timezone: 'Etc/GMT-2', 
+    },
+    logging: false
+  }
+)
+//timezone & logging : evite ls affichages d'avertissemnt ds la console plusu tard
+
+//Test si la connexion a réussi ou non
+sequelize.authenticate()
+  .then(_ => console.log('La connexion a la base de données a bien été établie.'))
+  .catch(error => console.error(`Impossible de se connecter à la base de données ${error}`))
+  
 
 //Utilisation de favicon + morgan + bodyParser
 app
