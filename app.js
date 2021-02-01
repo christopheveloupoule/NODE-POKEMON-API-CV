@@ -2,6 +2,9 @@ const express = require('express')
 //Mot clé "require" indique à nodeJS d'aller chercher
 // la dependance 'express' ds le folder node module
 
+//const helper = require('helper.js') //import du module helper
+const { success } = require('./helper.js') //desctruturat°
+
 let pokemons = require('./mock-pokemon'); //import list pokemons, puis pt de terminaison...
   
 const app = express() //creat° d'une instance de l'appli express grace à la METHOD du meme nom
@@ -23,13 +26,18 @@ app.get('/', (req, res) => res.send('Hello, Express 👋!'))
     res.send(`Vous avez demandé Le pokemon ${pokemon.name}`)
   })*/
 
-app.get('/api/pokemons/:id', (req, res) => {
+/*app.get('/api/pokemons/:id', (req, res) => {
     const id = parseInt(req.params.id) //recupere l'id ds l'url & send la res au client
     const pokemon = pokemons.find(pokemon => pokemon.id === id) //METHOD find pr recup un pokemon
     res.json(pokemon)
+})*/
+
+app.get('/api/pokemons/:id', (req, res) => {
+    const id = parseInt(req.params.id) //recupere l'id ds l'url & send la res au client
+    const pokemon = pokemons.find(pokemon => pokemon.id === id) //METHOD find pr recup un pokemon
+    const message = 'Un pokémon a bien été trouvé.'
+    res.json(success(message,pokemon)) //METHOD success pr avoir une res structurée
 })
-
-
 
 //Le nouveau pt de terminaison qui affiche le nbr total de pokemons
 app.get('/api/pokemons/', (req, res) => res.send(`Il y a ${pokemons.length} pokémons dans le pokédex pour le moment.`))
