@@ -5,13 +5,15 @@ const express = require('express')
 const morgan = require('morgan') //Import du middleWare morgan
 const favicon = require('serve-favicon') //Import du middleWare serve-favicon
 const bodyParser = require('body-parser') //Import du middleWare body-parser
-const { Sequelize } = require('sequelize')
+const { Sequelize, DataTypes } = require('sequelize') //Type de donnee contenu ds notre model
 
 //const helper = require('helper.js') //import du module helper
 const { success, getUniqueId } = require('./helper.js') //desctruturat°
 
 let pokemons = require('./mock-pokemon'); //import list pokemons, puis pt de terminaison...
-  
+const PokemonModel = require('./src/models/pokemon') //Import de notre modèl
+
+
 const app = express() //creat° d'une instance de l'appli express grace à la METHOD du meme nom
 const port = 5001 // port sur lequel on va demarrer notre APIREST pr la suite
 
@@ -52,7 +54,13 @@ const sequelize = new Sequelize('pokedex', 'root', '', { //DB+id+PWD
 sequelize.authenticate()
   .then(_ => console.log('La connexion a la base de données a bien été établie.'))
   .catch(error => console.error(`Impossible de se connecter à la base de données ${error}`))
-  
+
+const Pokemon = PokemonModel(sequelize, DataTypes)  
+//On instancie notre model PokemonModel, cree la table POKEMON associé a ce model
+
+//On synchronise notre demande avec l'etat de la DB 
+sequelize.sync({force: true})
+ .then(_ => console.log('La base de donnée "Pokedex" a bien été établie.'))
 
 //Utilisation de favicon + morgan + bodyParser
 app
