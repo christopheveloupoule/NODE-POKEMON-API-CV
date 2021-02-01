@@ -3,6 +3,7 @@ const express = require('express')
 // la dependance 'express' ds le folder node module
 
 const morgan = require('morgan') //Import du middleWare morgan
+const favicon = require('serve-favicon') //Import du middleWare serve-favicon
 
 //const helper = require('helper.js') //import du module helper
 const { success } = require('./helper.js') //desctruturat°
@@ -26,8 +27,16 @@ app.use(logger)*/
     next() //METHOD next fournit pr express indiquant que le traitemnt du MiddleWare est terminée
 })*/
 
-app.use (morgan('dev')) // Utilisat° de cette dependance ds mn code (phase de dev & debug)
+//app.use (morgan('dev')) // Utilisat° de cette dependance ds mn code (phase de dev & debug)
 //METHOD 'use' pr attacher un middleWare à notre API REST avc express
+//npm install morgan --save-dev
+//npm install serve-favicon --save puis import du fichier favicon.ico
+
+
+//Utilisation de favicon + morgan
+app
+  .use(favicon(__dirname + '/favicon.ico')) 
+  .use (morgan('dev'))
  
 app.get('/', (req, res) => res.send('Hello, Express 👋!'))
 //Notre 1er poitn de terminaison definit
