@@ -5,7 +5,7 @@ const express = require('express')
 let pokemons = require('./mock-pokemon'); //import list pokemons, puis pt de terminaison...
   
 const app = express() //creat° d'une instance de l'appli express grace à la METHOD du meme nom
-const port = 5000 // port sur lequel on va demarrer notre APIREST pr la suite
+const port = 5001 // port sur lequel on va demarrer notre APIREST pr la suite
   
 app.get('/', (req, res) => res.send('Hello, Express 👋!'))
 //Notre 1er poitn de terminaison definit
@@ -17,11 +17,19 @@ app.get('/', (req, res) => res.send('Hello, Express 👋!'))
     res.send(`Le pokemon n°${id} est ${name}`)
 })*/
 
-app.get('/api/pokemons/:id', (req, res) => {
+/*app.get('/api/pokemons/:id', (req, res) => {
     const id = parseInt(req.params.id) //recupere l'id ds l'url & send la res au client
     const pokemon = pokemons.find(pokemon => pokemon.id === id) //METHOD find pr recup un pokemon
     res.send(`Vous avez demandé Le pokemon ${pokemon.name}`)
-  })
+  })*/
+
+app.get('/api/pokemons/:id', (req, res) => {
+    const id = parseInt(req.params.id) //recupere l'id ds l'url & send la res au client
+    const pokemon = pokemons.find(pokemon => pokemon.id === id) //METHOD find pr recup un pokemon
+    res.json(pokemon)
+})
+
+
 
 //Le nouveau pt de terminaison qui affiche le nbr total de pokemons
 app.get('/api/pokemons/', (req, res) => res.send(`Il y a ${pokemons.length} pokémons dans le pokédex pour le moment.`))
