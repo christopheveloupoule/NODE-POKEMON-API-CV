@@ -4,6 +4,7 @@ const express = require('express')
 
 const morgan = require('morgan') //Import du middleWare morgan
 const favicon = require('serve-favicon') //Import du middleWare serve-favicon
+const bodyParser = require('body-parser') //Import du middleWare body-parser
 
 //const helper = require('helper.js') //import du module helper
 const { success, getUniqueId } = require('./helper.js') //desctruturat°
@@ -33,10 +34,12 @@ app.use(logger)*/
 //npm install serve-favicon --save puis import du fichier favicon.ico
 
 
-//Utilisation de favicon + morgan
+//Utilisation de favicon + morgan + bodyParser
 app
   .use(favicon(__dirname + '/favicon.ico')) 
-  .use (morgan('dev'))
+  .use(morgan('dev'))
+  .use(bodyParser.json()) 
+  //sr ts ls pts de terminaison, on parse ttes les inputdata vers notre APIREST
  
 app.get('/', (req, res) => res.send('Hello, Express 👋!'))
 //Notre 1er poitn de terminaison definit
