@@ -92,6 +92,29 @@ app.post('/api/pokemons', (req, res) => { //action POST + url associé st def...
     res.json(success(message, pokemonCreated)) //retourne l'enssembl ds un JSON
 })
 
+//Modifier un pokemon (en passant pr notre APIREST)
+app.put('/api/pokemons/:id', (req, res) => {
+    const id = parseInt(req.params.id);
+    const pokemonUpdated = { ...req.body, id: id }
+//Modife du POKEMON, MAJ de la liste global de pok,l'ancien remplacé pr le new
+    pokemons = pokemons.map(pokemon => {
+     return pokemon.id === id ? pokemonUpdated : pokemon
+    }) //list des pk a jour (demander pr le client)
+     
+    const message = `Le pokémon ${pokemonUpdated.name} a bien été modifié.`
+    res.json(success(message, pokemonUpdated))
+   });
+
+//Suppression d'un pokemon
+app.delete('/api/pokemons/:id', (req, res) => {
+    const id = parseInt(req.params.id)
+    const pokemonDeleted = pokemons.find(pokemon => pokemon.id === id)//
+//METHOD FIND renvoi la valeur du 1er elemnt trouvé
+    pokemons = pokemons.filter(pokemon => pokemon.id !== id) //METHOD JS ative 'filter'
+    const message = `Le pokémon ${pokemonDeleted.name} a bien été supprimé.`
+    res.json(success(message, pokemonDeleted))
+  }); // on obtient en retour une nouvelle liste de pokemon avc le pok suppr
+
 app.listen(port, () => 
     console.log(`Notre application Node est démarrée sur : http://localhost:${port}`))
 //METHOD listen fournit pr express
