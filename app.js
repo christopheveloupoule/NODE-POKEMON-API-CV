@@ -59,8 +59,21 @@ const Pokemon = PokemonModel(sequelize, DataTypes)
 //On instancie notre model PokemonModel, cree la table POKEMON associé a ce model
 
 //On synchronise notre demande avec l'etat de la DB 
+//sync permet de supprim la table associée a chaque model avant d'effectuer un synchr
 sequelize.sync({force: true})
- .then(_ => console.log('La base de donnée "Pokedex" a bien été établie.'))
+ .then(_ => {
+    console.log('La base de donnée "Pokedex" a bien été synchronisée.')
+    
+    Pokemon.create({ //METHODE CREATE
+        name: 'bulbizzare',
+        hp: 25,
+        cp: 5,
+        picture: 'https://assets.pokemon.com/assets/cms2/img/pokedex/detail/001.png',
+        types: ["Plante", "Poison"].join() //renvoi une str ('plante,poisson')
+    }).then(bulbizzare => console.log(bulbizzare.toJSON()))
+    //traitement asynchron pr sequelize...
+    //METHOD toJSON pr n'afficher que ls valeurs qui ns interess
+ })
 
 //Utilisation de favicon + morgan + bodyParser
 app
