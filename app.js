@@ -6,7 +6,7 @@ const morgan = require('morgan') //Import du middleWare morgan
 const favicon = require('serve-favicon') //Import du middleWare serve-favicon
 
 //const helper = require('helper.js') //import du module helper
-const { success } = require('./helper.js') //desctruturat°
+const { success, getUniqueId } = require('./helper.js') //desctruturat°
 
 let pokemons = require('./mock-pokemon'); //import list pokemons, puis pt de terminaison...
   
@@ -72,12 +72,22 @@ app.get('/api/pokemons/:id', (req, res) => {
     res.send(`Il y a ${pokemons.length} pokémons dans le pokédex pour le moment.`)
 })*/
 
-
 // On retourne la liste des pokémons au format JSON, avec un message :
 app.get('/api/pokemons', (req, res) => {
     const message = 'La liste des pokémons a bien été récupérée.'
     res.json(success(message, pokemons)) 
   })
+
+//Ajout d'un POKEMON
+app.post('/api/pokemons', (req, res) => { //action POST + url associé st def...
+    const id = getUniqueId(pokemons) //...
+    const pokemonCreated = { ...req.body, ...{id: id, created: new Date()}}
+//fusion les data du pokemon recu via la req hhtp entrante avc l'id unique généré
+    pokemons.push(pokemonCreated) //ajout d'un pok a la liste des poks existants ..
+    const message = `Le pokémon ${pokemonCreated.name} a bien été crée.`
+//on genere un msg de confirmat° ds consommat de l'API REST
+    res.json(success(message, pokemonCreated)) //retourne l'enssembl ds un JSON
+})
 
 app.listen(port, () => 
     console.log(`Notre application Node est démarrée sur : http://localhost:${port}`))
