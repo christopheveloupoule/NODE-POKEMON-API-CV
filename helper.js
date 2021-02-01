@@ -1,3 +1,4 @@
+/*
 // Reponse surmesure avc raccourci de syntaxe
 
 exports.success = (message, data) => {
@@ -18,6 +19,7 @@ qui prend 2 param en compte pr construire
 une nvelle rep Json mieux structuré
 */
 /////////////////////////////////////////////////////////////////
+/*
 exports.getUniqueId = (pokemons) => {
   const pokemonsIds = pokemons.map(pokemon => pokemon.id)
 //on transforme le arr des pok pr un arr d'id de pok grace 
@@ -32,5 +34,5 @@ exports.getUniqueId = (pokemons) => {
 }
 
 //METHOD outil
-
+*/
 
