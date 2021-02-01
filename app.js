@@ -9,6 +9,14 @@ let pokemons = require('./mock-pokemon'); //import list pokemons, puis pt de ter
   
 const app = express() //creat° d'une instance de l'appli express grace à la METHOD du meme nom
 const port = 5001 // port sur lequel on va demarrer notre APIREST pr la suite
+
+//MiddleWare logger
+const logger =(req,res, next) => { //3param
+    console.log(`URL : ${req.url}`);
+    next() //METHOD next fournit pr express indiquant que le traitemnt du MiddleWare est terminée
+}
+
+app.use(logger)
   
 app.get('/', (req, res) => res.send('Hello, Express 👋!'))
 //Notre 1er poitn de terminaison definit
