@@ -2,6 +2,8 @@ const express = require('express')
 //Mot clé "require" indique à nodeJS d'aller chercher
 // la dependance 'express' ds le folder node module
 
+const morgan = require('morgan') //Import du middleWare morgan
+
 //const helper = require('helper.js') //import du module helper
 const { success } = require('./helper.js') //desctruturat°
 
@@ -11,13 +13,22 @@ const app = express() //creat° d'une instance de l'appli express grace à la ME
 const port = 5001 // port sur lequel on va demarrer notre APIREST pr la suite
 
 //MiddleWare logger
-const logger =(req,res, next) => { //3param
+/*const logger =(req,res, next) => { //3param
     console.log(`URL : ${req.url}`);
     next() //METHOD next fournit pr express indiquant que le traitemnt du MiddleWare est terminée
 }
 
-app.use(logger)
-  
+app.use(logger)*/
+
+//on abrege le code pour qu'il soit plus concis...
+/*app.use ((req,res, next) => { //3param
+    console.log(`URL : ${req.url}`);
+    next() //METHOD next fournit pr express indiquant que le traitemnt du MiddleWare est terminée
+})*/
+
+app.use (morgan('dev')) // Utilisat° de cette dependance ds mn code (phase de dev & debug)
+//METHOD 'use' pr attacher un middleWare à notre API REST avc express
+ 
 app.get('/', (req, res) => res.send('Hello, Express 👋!'))
 //Notre 1er poitn de terminaison definit
 //METHOD de la req GET qui va prendre en param 2 elements...
