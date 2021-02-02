@@ -37,8 +37,6 @@ app.use(({res}) => {
 	res.status(404).json({message});
 });
 
-
-
 app.listen(port, () => 
     console.log(`Notre application Node est démarrée sur : http://localhost:${port}`))
 //METHOD listen fournit pr express
