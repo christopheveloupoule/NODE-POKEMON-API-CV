@@ -1,5 +1,7 @@
 const { User } = require('../db/sequelize')
 const bcrypt = require('bcrypt')
+const jwt = require('jsonwebtoken'); //jeton
+const privateKey = require('../auth/private_key')
   
 module.exports = (app) => {
   app.post('/api/login', (req, res) => {
@@ -18,8 +20,17 @@ module.exports = (app) => {
             return res.status(401).json({message})
           }
 
+// Générer un jeton JWT valide pendant 24 heures.
+//avc la METHOD 'sign' du module JWT
+        const token = jwt.sign(
+            { userId: user.id },
+            privateKey,
+            { expiresIn: '24h' }
+          );
+
         const message = `L'utilisateur a été connecté avec succès`;
         return res.json({ message, data: user, token })
+//On retourne le jeton fraichement crée
       })
     })
     .catch(error => { //cas d'erreur générique, appel réseau qui echouerait par exemple
