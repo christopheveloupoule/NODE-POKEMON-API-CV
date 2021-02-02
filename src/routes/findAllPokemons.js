@@ -13,6 +13,11 @@ module.exports = (app) => { //export une fct qui prend en param l'appli express 
 //on def une cst limit qui a pr val 'le param transmit pr le user' ou par def 5
 //express transmet tt ls params ss forme de string et limit est un nbre
 
+    if(name.length < 2) {
+      const message = `Le terme de recherche doit contenir au minimum 2 caractères.`
+      return res.status(400).json({ message })        
+    }
+
       //return Pokemon.findAll({//METHOD findAll, récupere ls datas depuis SQL
       return Pokemon.findAndCountAll({ //nbr tot de resul + resul demande ds la db
         where: { 
