@@ -9,6 +9,10 @@ module.exports = (app) => { //export une fct qui prend en param l'appli express 
   app.get('/api/pokemons', (req, res) => {
     if(req.query.name) { //indique a express d'extraire le param 'name' de l'url
       const name = req.query.name
+      const limit = parseInt(req.query.limit) || 5
+//on def une cst limit qui a pr val 'le param transmit pr le user' ou par def 5
+//express transmet tt ls params ss forme de string et limit est un nbre
+
       //return Pokemon.findAll({//METHOD findAll, récupere ls datas depuis SQL
       return Pokemon.findAndCountAll({ //nbr tot de resul + resul demande ds la db
         where: { 
@@ -19,7 +23,10 @@ module.exports = (app) => { //export une fct qui prend en param l'appli express 
         }
        },
        order: ['name'],//prop du modele sequelize pr ordonner ls result (par def ordr croiss)
-       limit: 5 //indique une limite de pok a afficher...
+//limit: 5 //indique une limite de pok a afficher...
+       limit: limit
+//on attribue une limite de resultat a notre req sequelize, en se basant sur le nbr determ previously
+
       })
       //.then(pokemons => {
       .then(({count, rows}) => { //on recup les 2 infos de la METHOD findAllCount
