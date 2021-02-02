@@ -1,4 +1,5 @@
 const { Pokemon } = require('../db/sequelize')
+const { ValidationError } = require('sequelize')
   
 module.exports = (app) => {
   app.put('/api/pokemons/:id', (req, res) => {
@@ -24,6 +25,9 @@ module.exports = (app) => {
       }) Rajout du 'return' à la METHOD findByPk*/
     })
     .catch(error => { //req sequelize echoue
+      if(error instanceof ValidationError) { //Ex:si ajout de str dans les pts de vie
+        return res.status(400).json({ message: error.message, data: error });
+      }
       const message = `Le pokémon n'a pu être modifié. 
                         Réessayez dans quelques instants.`
       res.status(500).json({ message, data: error })
