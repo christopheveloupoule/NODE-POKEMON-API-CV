@@ -9,8 +9,8 @@ module.exports = (app) => { //export une fct qui prend en param l'appli express 
   app.get('/api/pokemons', (req, res) => {
     if(req.query.name) { //indique a express d'extraire le param 'name' de l'url
       const name = req.query.name
-//METHOD findAll, récupere ls datas depuis SQL
-      return Pokemon.findAll({
+      //return Pokemon.findAll({//METHOD findAll, récupere ls datas depuis SQL
+      return Pokemon.findAndCountAll({ //nbr tot de resul + resul demande ds la db
         where: { 
           name: { //'name', propriété du modele pokemon
             [Op.like]: `%${name}%` //'name', critère de recherche
@@ -18,14 +18,19 @@ module.exports = (app) => { //export une fct qui prend en param l'appli express 
 // % pr indiquer ou effectuer la recherche du pokemon en question
         }
        },
+       order: ['name'],//prop du modele sequelize pr ordonner ls result (par def ordr croiss)
        limit: 5 //indique une limite de pok a afficher...
       })
-      .then(pokemons => {
-        const message = `Il y a ${pokemons.length} pokemons qui correspondent au terme de recherche ${name}.`
-        res.json({ message, data: pokemons })
+      //.then(pokemons => {
+      .then(({count, rows}) => { //on recup les 2 infos de la METHOD findAllCount
+        //const message = `Il y a ${pokemons.length} pokemons qui correspondent au terme de recherche ${name}.`
+        //res.json({ message, data: pokemons })
+        const message = `Il y a ${count} pokemons qui correspondent au terme de recherche ${name}.`
+        res.json({ message, data: rows })
       })
     } else {
-      Pokemon.findAll() //Method qui retourne une promesse contenant la liste de ts les pokemons présent ds la db
+      Pokemon.findAll({ order: ['name'] }) //prop du modele sequelize pr ordonner ls result (par def ordr croiss)
+  //Method qui retourne une promesse contenant la liste de ts les pokemons présent ds la db
       .then(pokemons => {
         const message = 'La liste des pokémons a bien été récupérée.'
         res.json({ message, data: pokemons })
