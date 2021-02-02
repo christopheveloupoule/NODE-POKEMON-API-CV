@@ -30,7 +30,13 @@ module.exports = (sequelize, DataTypes) => {
       },
       types: {
         type: DataTypes.STRING,
-        allowNull: false
+        allowNull: false,
+        get() { //getter def au sens de sequelize, transforme une str en arr de str(DB=>API)
+          return this.getDataValue('types').split(',')
+        },
+        set(types) { // a l'inverse le setter, transformer le arr ds types de Pokemon en str unique(API=>DB)
+          this.setDataValue('types', types.join())
+        }
       }
     }, {//Option de parametrage global
       timestamps: true, //Modofier le comportement par defaut de sequelize

@@ -21,11 +21,15 @@ sequelize.initDb()
  
 //Ici ns placerons ns futurs pts de terminaison
 
-require('./src/routes/findAllPokemons')(app) 
 //traitement de la route dans le module concerné (findAllPokemons)
 //equivalent à 
 //const findAllPokemons = require('./src/routes/findAllPokemons')
 //findAllPokemons(app)
+require('./src/routes/findAllPokemons')(app) 
+require('./src/routes/findPokemonByPk')(app) 
+require('./src/routes/createPokemon')(app) 
+require('./src/routes/updatePokemon')(app) 
+require('./src/routes/deletePokemon')(app) 
 
 app.listen(port, () => 
     console.log(`Notre application Node est démarrée sur : http://localhost:${port}`))
