@@ -1,5 +1,6 @@
 const { Sequelize, DataTypes } = require('sequelize')
 const PokemonModel = require('../models/pokemon')
+const UserModel = require('../models/user')
 const pokemons = require('./mock-pokemon')
   
 const sequelize = new Sequelize('pokedex', 'root', '', {
@@ -12,6 +13,8 @@ const sequelize = new Sequelize('pokedex', 'root', '', {
 })
   
 const Pokemon = PokemonModel(sequelize, DataTypes)
+const User = UserModel(sequelize, DataTypes)
+//on instancie le model user aupres de Sequelize
   
 const initDb = () => {
   return sequelize.sync({force: true}).then(_ => {
@@ -24,11 +27,19 @@ const initDb = () => {
         types: pokemon.types //.join() //plus besoin de join grace au getter & setter
       }).then(pokemon => console.log(pokemon.toJSON()))
     })
+
+//METHOD create, on pousse un nouveau user ds la db
+    User.create({
+      UserName: 'pikachu',
+      password: 'pikachu'
+    })
+    .then(user => console.log(user.toJSON()))
+
     console.log('La base de donnée a bien été initialisée !')
   })
 }
   
 module.exports = { 
-  initDb, Pokemon //permet d'initialiser la DB...
+  initDb, Pokemon, User //permet d'initialiser la DB, on peut utiliser ailleurs en export
 }
 

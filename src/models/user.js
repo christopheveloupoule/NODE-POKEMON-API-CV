@@ -1,5 +1,5 @@
 module.exports = (sequelize, DataTypes) => {
-    return sequelize.define('User', {
+    return sequelize.define('User', { // modele user avc regle de validation...
       id: {
         type: DataTypes.INTEGER,
         primaryKey: true,
