@@ -19,6 +19,10 @@ module.exports = (sequelize, DataTypes) => {
       name: {
         type: DataTypes.STRING,
         allowNull: false,
+        unique: { //contrainte qui permet l'unicité ds noms de pokemon
+//ajout de cette gestion d'err ds ls pts de terminaison create&updatePok...
+          msg: 'Le nom est déjà pris.'
+        },
         validate: { // validateur
           notEmpty: { msg: 'Le nom ne peut pas être vide.' },
           notNull: { msg: 'Le nom est une propriété requise.'},
