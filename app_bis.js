@@ -4,13 +4,13 @@ const express = require('express')
 //Mot clé "require" indique à nodeJS d'aller chercher
 // la dependance 'express' ds le folder node module
 
-const morgan = require('morgan') //Import du middleWare morgan
+const morgan = require('morgan') //Import du middleWare morgan (details de msg de log que l'on souhaite affiché)
 const favicon = require('serve-favicon') //Import du middleWare serve-favicon
-const bodyParser = require('body-parser') //Import du middleWare body-parser
+const bodyParser = require('body-parser') //Import du middleWare body-parser (data JSON)
 const { Sequelize, DataTypes } = require('sequelize') //Type de donnee contenu ds notre model
 
 //const helper = require('helper.js') //import du module helper
-const { success, getUniqueId } = require('./helper.js') //desctruturat°
+const { success, getUniqueId } = require('./helper.js') //desctruturat° (dans le helpers.js)
 
 let pokemons = require('./src/db/mock-pokemon'); //import list pokemons, puis pt de terminaison...
 const PokemonModel = require('./src/models/pokemon') //Import de notre modèl
@@ -37,8 +37,6 @@ app.use(logger)*/
 
 //app.use (morgan('dev')) // Utilisat° de cette dependance ds mn code (phase de dev & debug)
 //METHOD 'use' pr attacher un middleWare à notre API REST avc express
-//npm install morgan --save-dev
-//npm install serve-favicon --save puis import du fichier favicon.ico
 
 ////////////////////////////////////////JUST HELP COMMENT a
 
@@ -93,8 +91,8 @@ sequelize.sync({force: true})
  })*/
 
 //Utilisation de favicon + morgan + bodyParser
-/*Prendre en compte
-app
+//Methode app.use pr utiliser le nouveau middleware (favicon) puis le morgan le LOGG et le bodyParser
+/*app
   .use(favicon(__dirname + '/favicon.ico')) 
   .use(morgan('dev'))
   .use(bodyParser.json()) */
@@ -102,11 +100,11 @@ app
  
 /*Prendre en compte
   app.get('/', (req, res) => res.send('Hello, Express 👋!')) */
-//Notre 1er poitn de terminaison definit
+//Notre 1er point de terminaison definit
 //METHOD de la req GET qui va prendre en param 2 elements...
 
 /*app.get('/api/pokemons/:id/:name', (req, res) => {
-    const id = req.params.id //recupere l'id ds l'url & send la res au client
+    const id = req.params.id //recupere l'id et name(2params) ds l'url & send la res au client
     const name = req.params.name
     res.send(`Le pokemon n°${id} est ${name}`)
 })*/
@@ -120,12 +118,12 @@ app
 /*app.get('/api/pokemons/:id', (req, res) => {
     const id = parseInt(req.params.id) //recupere l'id ds l'url & send la res au client
     const pokemon = pokemons.find(pokemon => pokemon.id === id) //METHOD find pr recup un pokemon
-    res.json(pokemon)
+    res.json(pokemon) //code concis et eff!
 })*/
 
 /*Prendre en compte
 app.get('/api/pokemons/:id', (req, res) => {
-    const id = parseInt(req.params.id) //recupere l'id ds l'url & send la res au client
+    const id = parseInt(req.params.id) //recupere l'id ds l'url & send la res au client | METHOD parseInt
     const pokemon = pokemons.find(pokemon => pokemon.id === id) //METHOD find pr recup un pokemon
     const message = 'Un pokémon a bien été trouvé.'
     res.json(success(message,pokemon)) //METHOD success pr avoir une res structurée
@@ -148,7 +146,7 @@ app.get('/api/pokemons', (req, res) => {
 app.post('/api/pokemons', (req, res) => { //action POST + url associé st def...
     const id = getUniqueId(pokemons) //...
     const pokemonCreated = { ...req.body, ...{id: id, created: new Date()}}
-//fusion les data du pokemon recu via la req hhtp entrante avc l'id unique généré
+//fusion les data du pokemon recu via la req http entrante avc l'id unique généré
     pokemons.push(pokemonCreated) //ajout d'un pok a la liste des poks existants ..
     const message = `Le pokémon ${pokemonCreated.name} a bien été crée.`
 //on genere un msg de confirmat° ds consommat de l'API REST
@@ -161,9 +159,12 @@ app.put('/api/pokemons/:id', (req, res) => {
     const id = parseInt(req.params.id);
     const pokemonUpdated = { ...req.body, id: id }
 //Modife du POKEMON, MAJ de la liste global de pok,l'ancien remplacé pr le new
+//Pr chaque Pok de la liste est retourne exactmnt ls meme pok sauf s'il s'agit du Pok à modif
     pokemons = pokemons.map(pokemon => {
      return pokemon.id === id ? pokemonUpdated : pokemon
-    }) //list des pk a jour (demander pr le client)
+    }) 
+//list des pk a jour (demander pr le client), possibilité de modi un pok 
+//en passant pr notre API REST
      
     const message = `Le pokémon ${pokemonUpdated.name} a bien été modifié.`
     res.json(success(message, pokemonUpdated))

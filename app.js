@@ -2,20 +2,20 @@ const express = require('express')
 //Mot clé "require" indique à nodeJS d'aller chercher
 // la dependance 'express' ds le folder node module
 
-const morgan = require('morgan') //Import du middleWare morgan
+const morgan = require('morgan') //Import du middleWare morgan (details de msg de log que l'on souhaite affiché)
 const favicon = require('serve-favicon') //Import du middleWare serve-favicon
-const bodyParser = require('body-parser') //Import du middleWare body-parser
+const bodyParser = require('body-parser') //Import du middleWare body-parser data JSON
 const sequelize = require('./src/db/sequelize') //on le recupe en passant pr notre module sequelize
 
 const app = express() //creat° d'une instance de l'appli express grace à la METHOD du meme nom
 const port = 5001 // port sur lequel on va demarrer notre APIREST pr la suite
 
 //Utilisation de favicon + morgan + bodyParser
+//Methode app.use pr utiliser le nouveau middleware (favicon) puis le morgan le LOGG et le bodyParser
 app
-  .use(favicon(__dirname + '/favicon.ico')) 
+  .use(favicon(__dirname + '/favicon.ico'))
   .use(morgan('dev'))
-  .use(bodyParser.json()) 
-  //sr ts ls pts de terminaison, on parse ttes les inputdata vers notre APIREST
+  .use(bodyParser.json())  // on parse ttes les données entrantes vers notre APIREST
 
 sequelize.initDb()
  
