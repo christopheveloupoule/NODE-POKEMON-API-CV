@@ -17,7 +17,7 @@ app
   .use(morgan('dev'))
   .use(bodyParser.json())  // on parse ttes les données entrantes vers notre APIREST
 
-sequelize.initDb()
+sequelize.initDb() //On appelle la METHOD initDb appelé precedemmnt
  
 //Ici ns placerons ns futurs pts de terminaison
 
@@ -38,6 +38,6 @@ app.use(({res}) => {
 	res.status(404).json({message});
 });
 
+//METHOD listen fournit pr express
 app.listen(port, () => 
     console.log(`Notre application Node est démarrée sur : http://localhost:${port}`))
-//METHOD listen fournit pr express

@@ -4,11 +4,12 @@ const { ValidationError, UniqueConstraintError } = require('sequelize')
 module.exports = (app) => {
   app.put('/api/pokemons/:id', (req, res) => {
     const id = req.params.id
-    Pokemon.update(req.body, {
+    Pokemon.update(req.body, { //modife du pok en db
       where: { id: id }
     })
-    .then(_ => {
-      return Pokemon.findByPk(id).then(pokemon => { //return la promess finByPk
+    .then(_ => { //return la promess finByPk*/
+      return Pokemon.findByPk(id).then(pokemon => { /*Recup un pok avc un id en db, et 
+on peut ensuite le retourner à nos client,*/
         if(pokemon === null) {
           const message = `Le pokémon demandé n'existe pas. Réessayez avec un autre identifiant.`
           return res.status(404).json({ message })

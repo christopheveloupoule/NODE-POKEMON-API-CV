@@ -3,22 +3,26 @@ const validTypes = ['Plante', 'Poison', 'Feu', 'Eau', 'Insecte', 'Vol', 'Normal'
 
 
 /*export d'une fct a 2params, sequelize (obj) connec° a la DB,
-l'interet de cette{},il a une propriete 'define' qui permet 
-de declarer un nouveau model aupres de sequelize*/
+l'interet de cette{},il possede une propriete 'define' qui permet 
+de declarer un nouveau model aupres de sequelize
+Le second param DataTypes qui permet de def ls types de données de 
+chaque propiété de notre modèle*/
 
 /*Param DataTypes*/
 
 module.exports = (sequelize, DataTypes) => {
-    return sequelize.define('Pokemon', { //METHOD DEFINE
-    //Description de notre modèle qui sera traduit en colonne dans la table pr la suite...
+    return sequelize.define('Pokemon', { /*La METHOD 'DEFINE' proposé pr Sequelize 
+//prends 3 params afin de mettre en place un nouveau 'model'
+Cette METHOD est importante cr Sequelize se base ls 'model' que ns declarons
+pour construire ls tables ds la db SQL pr la suite*/
       id: {
         type: DataTypes.INTEGER,
-        primaryKey: true,
-        autoIncrement: true
+        primaryKey: true, //clé primaire de notre table
+        autoIncrement: true //qui garantit l'unicité de chaque pok
       },
       name: {
         type: DataTypes.STRING,
-        allowNull: false,
+        allowNull: false, //indique si tel ou tel propriete est facultative ou nn
         unique: { //contrainte qui permet l'unicité ds noms de pokemon
 //ajout de cette gestion d'err ds ls pts de terminaison create&updatePok...
           msg: 'Le nom est déjà pris.'
@@ -95,8 +99,8 @@ pr savoir si il est bien inclu ds la liste de pok*/
           }
         }  
       }
-    }, {//Option de parametrage global
-      timestamps: true, //Modofier le comportement par defaut de sequelize
+    }, {//Dernier des 3 params - Option de parametrage global
+      timestamps: true, //Modifier le comportement par defaut de sequelize
       createdAt: 'created', //Date de creation d'un new pokemon
       updatedAt: false //Date de modife d'une instance (false, desactivation)
     })

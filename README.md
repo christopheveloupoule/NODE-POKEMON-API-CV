@@ -71,9 +71,73 @@ npm install body-parser --save, on importe ce middleware dans app.js
 *************************************************************
 Base de données
 *************************************************************
-29/Telecharg. de XAMPP - relier notre APIREST à la DB
-serveur web apache | db mariaDB | appliweb PHPMyAdmin
+29/Telecharg. de XAMPP (enssemble de logiciel pr faire tourner un db SQL sur notre poste de travail ) - relier notre APIREST à la DB
+serveur web apache | db mariaDB | appliweb PHPMyAdmin (visualiser et interagir avc notre db mysql directement depuis une interface web)
 30/Demarrer la DB
-31/
-32/
-33/
+31/ORM (sorte de blackbox): db <-- OjectRelationalMapping(sequelize) <-- API Rest
+technique de prog qui permet de convertir ds DB en JS, on continu le dev de
+notre APIRest ms on va interagir avc ds {} JS fournit pr l'ORM
+Av: Pas besoin d'apprendre le langage de requete SQL (les notions de table, champs...),
+on use le JS
+requete simple via ORM : findAll, findOne...
+32/ORM sequelize: basé sr les promess de JS. permet de gerer les traitement async +eff que de simples callback
+sequelize support la plupart ds DB SQL (postgreSQL,MySQL,MsSql,SQlyte ) /tres bien documenté...,basé sur les Promises
+cde : npm install sequelize --save
+une fois sequelize installé, installé un DRIVER (qui intervient lorsque l'ORM se connect à la DB)
+XAMPP a installé la db MariaDB, il faut dc installé le DRIVER correspondant pr la connex° sequelize <--> MariaDB
+cde : npm install mariadb --save,
+maintenant Sequelize fait parti intégrante de notre APIRest
+Pr verif si Sequelize et le driver pr MariaDB a bien été installé, voir le package.json
+33/Connecter Sequelize, MariaDB et notre APIRest qu'il faut assembler pr obtenir un result,
+pr le moment Sequelize ds le folder nodemoudle de l'APIRest et MariaDB qq part sr notre poste de travail via XAMPP.
+Sequelize tres simple de config pr la connec a une DB en 3 etapes, 
+ds le fichier app.js : 1/import du module Sequelize 2/Config et creer une inst de la class Sequelize 3/Test l'authentif via la METHOD aunthenticate() ss forme de promess..
+*************************************************************
+Demarrer XAMPP puis npm start!
+Message d'err: Unknown database 'pokedex', on crée dc la DB ds PHPmyADMIN! puis on relance 'npm start' ds VSC!
+************************************************************
+34/Organisation de mon code : app.js, trop de role!!!
+Initialisation de notre serveur express/Connexion DB SQL/
+Gestion des routes et ds points de terminaisons
+Mise en place d'une architecture! 
+But: construire notre ApiRest sur notre DB
+************************************************************
+API REST & DB
+************************************************************
+35/Ls modèles Sequelize: comment il fct de l'interieur, il faut prendre connaissnce du concept de 'models'!.
+Un 'model' represente une table ds notre DB.
+On déclare un model 'pokemon' qui representera la table contenant les pokemons ds la DB 'pokemons'.
+Model : {}JS fournit par Sequelize que l'on peut param
+36/Creer notre modele Sequelize: On declare un {}JS en respectant les convent° proposé pr Sequelize
+src/models/pokemon.js (REM : on commence à strutcuré notre dossier)
+On va pouvoir se debarraser du helpers.js
+La db est source de vérité
+37/Synchroniser le modèle avc la dB:
+On a crée un modele Sequelize(ds le code JS) coté APIRest pr le moment, maintenant il faut lui indiquer explicitement de creer la DB qui est associé. On doit dc pousser ns model sur la DB
+1 Modele Sequelize = 1 Table SQL, on obtient une table de donnée ds PHP mais on va MAJ notre app.js
+38/Instancier un modele Sequelize: Comment remplir avc ds datas notre table pokemon. Fct interne de Sequelize
+Creer des Instances de pokemon cad ajouter de nouveaux pok grace a notre model Sequelize 'pokemon model' directemnt en DB (METHOD Create()). on reprend app.js pr mettre en appli cette METHOD
+39/Initialiser la DB avc 12 pok au demarrage de notre APIRest: METHOD Creat()
+40/Restrutcurer notre architecture: 
+app.js (alléger) / helper.js (supprimer ce module) / src/db/mock-pockemon.js (modifier son emplacement)  / src/db/sequelize.js : creer ce nouveau fichier dédié à la connexion à notre db chargé de generer et d'exposer ds 'models' Sequelize ds le reste de notre APIRest.
+Notre point d'entrée app.js: demarrer un serveur express avc un code simple & minimaliste
+obj: creer ds pts terminaison + complet directement relié à notre DB.
+41/Recuperer l'ensemble ds données: Pr le moment on sait relier notre API directement à Sequelize, mais encore mise en place tte la chaine.
+42/Pr recupe tts les infos de ts ls pokemons,on utilisera la  'METHOD findAll()' : src/routes/findAllPokemons.js
+Recuperer l'enssemble des pok 'METHOD findAll()' 
+43/Recuperer un pok 'METHOD findByPk()'
+44/Ajouter un pok, METHOD 'create(), test via Insomnia
+Suivant le message d'err, "type" doit etre renommé en "types"
+45/Enrichir ns models avc ls "Getters" & "Setters":
+Format de type de données pas le meme côté APIRest et DB, 
+il faudrait convertir lr type "automatiquement" au bon format:
+on insere au niveau de la propiete types de src/model/pokemon.js
+46/Modife un Pokemon en DB: 
+47/Modife d'un POK : METHOD updatePokemon.js
+48/Suppression d'un pok: METHOD destro() de sequelize
+Conclusion: on retrouve un backend complet:
+un serveur developpé avec NodeJS / une APIRest réalisé avec Express qui est directement relié / avc un db mySQL
+49/
+50/
+
+

@@ -1,4 +1,4 @@
-//Pr recuperer la liste de tous les POKEMONs
+//Pr recuperer la liste de tous les POKEMONs ds la DB
 const { Pokemon } = require('../db/sequelize')
 //Import de l'opérateur Sequelize
 const { Op } = require('sequelize')

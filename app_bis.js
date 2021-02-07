@@ -86,7 +86,7 @@ sequelize.sync({force: true})
             types: pokemon.types.join()
         }).then(bulbizzare => console.log(bulbizzare.toJSON()))
         //traitement asynchron pr sequelize...
-        //METHOD toJSON pr n'afficher que ls valeurs qui ns interess
+        //METHOD 'toJSON' pr n'afficher que ls valeurs qui ns interess
     })
  })*/
 
