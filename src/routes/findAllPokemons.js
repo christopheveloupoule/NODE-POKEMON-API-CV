@@ -43,11 +43,11 @@ module.exports = (app) => { //export une fct qui prend en param l'appli express 
     } else {
       Pokemon.findAll({ order: ['name'] }) //prop du modele sequelize pr ordonner ls result (par def ordr croiss)
   //Method qui retourne une promesse contenant la liste de ts les pokemons présent ds la db
-      .then(pokemons => {
+      .then(pokemons => { //Cas de succes
         const message = 'La liste des pokémons a bien été récupérée.'
         res.json({ message, data: pokemons })
       })
-      .catch(error => {
+      .catch(error => {//cas d'echec
         const message = `La liste des pokémons n'a pas pu être récupéré. 
                          Réessayez dans quelques instants.`
         res.status(500).json({ message, data: error })

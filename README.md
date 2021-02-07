@@ -137,7 +137,51 @@ on insere au niveau de la propiete types de src/model/pokemon.js
 48/Suppression d'un pok: METHOD destro() de sequelize
 Conclusion: on retrouve un backend complet:
 un serveur developpé avec NodeJS / une APIRest réalisé avec Express qui est directement relié / avc un db mySQL
-49/
-50/
+************************************************************
+Gestion des err
+************************************************************
+49/ err de prog (console log pr comprendre ce qui ne fonctionne pas ) et les err operationnel qui se produisent inévitablement lorsque les consommateurs interagiront avc l'APIRest (Chemin nn valide, echec de la connexion entre Sequelize et la DB), les données transmisent et nn valide...)
+But: Anticiper la maniere dont ls consommateurs vt se comporter vis à vis de l'APIRest, 2cas reussite de l'appel ou echec de l'appel (on va mettre en place via des message significatif)
+50/Codes status HTTP
+51/Err404: (Page not found ex: localhost:5001/api/pokemonz)
+dans le app.js, à la suite ds routes ajout d'une fct de middleware
+52/Mise en place ds err sr la liste ds pok: findAllPokemons
+53/Recup d'un pok specifique: findPokemonByPk
+54/Err lors de l'ajout d'un pok: createPokemon.js
+55/Err lors de la modif d'un pok: updatePokemonByPk
+56/Err lors de la suppr d'un pok: deletePokemon.js
+57/Conclusion: plusieurs 'res' snt possibles depuis notre code JS, ne pas oublier d'utilisé l’instruction "return" pour couper l’exécution du code sur le serveur!
+************************************************************
+Validation métier 
+************************************************************
+58/Validateurs & contraintes: err metiers (ex: changer le name 'Bulbizzare' en '1234'). Lors de la validation d'un model Sequelize distingue 2 cas validateurs(chargé de la validation du model au niveau du code JS pure, si la validation echoue, Sequelize n'enverra aucune req SQL à la DB) & contraintes (rules def directement au niveau de la DB, EX: si on souhaite que ts les pok ont ds nom differents , comment coder cela ? -> definir ds rules directement au niveau de la DB grace au contraintes de Sequelize, une 'req' sera envoyé a la DB pr Sequelize)
+En passant pr ls validateurs, on peut eviter d'interroger inutilement notre DB et ainsi economiser de précieuse ressources, 
+du coup 'rep' plus rapidefournis au client
+59/Validation par def de Sequelize : Ds le modeles/pokemon/js, chaque champs contient au moins 2 informations,le type et  allowNull.
+Ex : Lors de la creation d'un Pokemon, un client peut faire 'req' et en retour avoir un une err 500 à la place d'une err 400, il faudra dc retoucher le code createPokemon.js
+60/Definir ls regles de validation basique sur models/pokemon.js
+On utilisera ls validateurs : notEmpty / isInt / notNull / isUrl
+61/Ajout de regles metiers (limite 0<HP<999 & 0<CP<99, on utilisera les validateurs min / max )
+62/Validateurs personnalisés: Ex pour les types de pok...
+modeles/pokemon/js, un pokemon ne devra avoir qu'entre 1 et 3 types, appartenir à un type predef (plante, poison ...) et donc pas n'importe quel type de str.
+nom arbitraire du validateur 'isTypeValid'
+63/Implementer une contrainte(models/pokemon.js): Mecanisme permettant de def ds regles coté SQL plutot que coté JS
+Ex: Contrainte d'unicité sur le name d'un pok, on devra passer par une contrainte Sequelize (validateur pas possible...)
+on va devoir intercepté l'err Sequelize unique constrainte error
+dans createPokemon.js et updatePokemon.js
+
+64/Conclusion : Gerer ls err ds notre appli et comment mettre en place tte ls METHOD proposées pr Sequelize.
+On a maintenant une vision global des err /APIRest depuis les err techniques ls + basiques au err de validation ls + personnalisés,
+sans oublier la mise ne place devalidateur métier
+*************************************************************
+
+************************************************************
+65/
+66/
+67/
+68/
+
+
+
 
 

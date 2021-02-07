@@ -32,11 +32,13 @@ require('./src/routes/updatePokemon')(app)
 require('./src/routes/deletePokemon')(app) 
 require('./src/routes/login')(app) //pt de terminaison d'authent ok...
 
-//Ajout de la gestion des err 404:
+//Ajout de la gestion des err 404(fct de middleware):
 app.use(({res}) => {
   const message = 'Impossible de trouver la ressource demandée ! Vous pouvez essayer une autre URL.'
 	res.status(404).json({message});
 });
+/*Utilisation de la METHOD STATUT d'express pr def un statut à notre res, 
+cette METHOD prend en param, le code de statut HTTP à retourner à ns clients*/
 
 //METHOD listen fournit pr express
 app.listen(port, () => 

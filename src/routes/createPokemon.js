@@ -9,11 +9,11 @@ module.exports = (app) => {
         res.json({ message, data: pokemon })
       })
       .catch(error => { //req sequelize echoue
-        if(error instanceof ValidationError) {
-          return res.status(400).json({ message: error.message, data: error });
+        if(error instanceof ValidationError) { //verif si err de validation Sequelize
+          return res.status(400).json({ message: error.message, data: error }); //faute du client
         }
         if(error instanceof UniqueConstraintError) {
-          return res.status(400).json({ message: 'error.message', data: error });
+          return res.status(400).json({ message: error.message, data: error });
         }
         const message = `La liste des pokémons n'a pas pu être ajouté. 
                          Réessayez dans quelques instants.`

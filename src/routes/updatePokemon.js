@@ -9,7 +9,9 @@ module.exports = (app) => {
     })
     .then(_ => { //return la promess finByPk*/
       return Pokemon.findByPk(id).then(pokemon => { /*Recup un pok avc un id en db, et 
-on peut ensuite le retourner à nos client,*/
+on peut ensuite le retourner à nos client
+Le "return"permet de transmettre l'err eventuel de findByPk ds le 
+bloc catch situé plus bas ds le code*/
         if(pokemon === null) {
           const message = `Le pokémon demandé n'existe pas. Réessayez avec un autre identifiant.`
           return res.status(404).json({ message })
