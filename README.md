@@ -169,17 +169,34 @@ nom arbitraire du validateur 'isTypeValid'
 Ex: Contrainte d'unicité sur le name d'un pok, on devra passer par une contrainte Sequelize (validateur pas possible...)
 on va devoir intercepté l'err Sequelize unique constrainte error
 dans createPokemon.js et updatePokemon.js
-
 64/Conclusion : Gerer ls err ds notre appli et comment mettre en place tte ls METHOD proposées pr Sequelize.
 On a maintenant une vision global des err /APIRest depuis les err techniques ls + basiques au err de validation ls + personnalisés,
 sans oublier la mise ne place devalidateur métier
 *************************************************************
-
+req Avancée
 ************************************************************
-65/
-66/
-67/
-68/
+65/ Presentation : Si un user ne souhaite recherche un pok pr sn nom , ou ne recupe que ls 5 derniers pok et non la liste complete, recup les pr ordre alphabetique..., on va dc pousser express & sSequelize encore un peu + loin pr offrir une APIRest +elaborer au consommateurs
+Query Params, 
+Ex : api/pokemons?name="Bulbizzare" | api/pokemons?limit=5 | api/pokemons?orderBy=name
+66/ Param d'url(on en a l'habitude) ou de 'req' ? :
+param url : pr identifier ds ressources (ex: GET /cars/:id), req.params.id
+param 'req' : pr trier ou filtrer ds ressources (ex: GET /cars?color=blue), req.query.name
+67/Ajout d'une fctnalité de recherche:
+Permettre au user de search un pok pr sn name EXACT sinon pas de renvoi de res (Ex: api/pokemons?name=Bulbizzare) ds findAllPokemons.js
+68/Utiliser un 'opérateur' Sequelize, opérateur like (findAllPokemons.js)
+69/Limiter le nbr de result (findAllPokemons.js)
+70/Calcul du nombr de result
+71/Ordonner les result (Tri pr ordre croitssant)
+72/Limiter les result dynamiquement : api/pokemons?limit=5
+73/Executer les 'req' pertinentes: obj , economiser ls ressources de notre backend en empechant les 'req' inutile a la DB mySQL (Exemple bloqué les req d'une lettre lors de la recherche de pok)
+Tjs dans findAllPokemons.js, 
+74/Conlusion : Req inutile à la DB à eviter, on a vu beaucoup de fonctionnalité permise pr express et sequelize
+***********************************************************
+Authentification
+***********************************************************
+
+Conclusion : Utilisation de BCRYPTE et JSON WEB TOKEN ainsi que d'un Middleware dédié à la sécu ds notre APIRest, nos pts de teminaison uniquement accessible aux consommateurs authentifiés
+
 
 
 
