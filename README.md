@@ -250,9 +250,19 @@ On peut maintenant supprimer le test.js
 3/Heroku n'installe ps ds dependances de dev. : reflechir au dependance morgan(pr illustré le fct ds middleware on va dc le suppr du package.json et ds l'app.js) et nodemon installé ds le package.json
 96/Ajouter un pt de terminaison "Hello Heroku" (affichage sur le web )
 97/Heberger une APIRest sur Heroku: on procede au deploiement via heroku CLI :on creéer et save le .gitignore à la racine
-98/
-99/
-100/
+1/git init / git add . / git commit -m "Ajout .gitignore" / heroku create
+Le nom du fichier affiché lors de cette derniere cde :heroku create
+https://afternoon-sierra-72220.herokuapp.com/ | https://git.heroku.com/afternoon-sierra-72220.git, le projet est bien crée sous la plateforme Heroku, il ne ns reste plus qu'à l'adresse indiqué par Heroku, n va donc deployer avec heroku CLI
+git push heroku main, la cde : heroku open.
+Il reste encore l'installation d'une DB sur l'environnement de Prod,, on a pu deployer notre APIRest sur Heroku via NodeJS
+98/Corriger les err en prod: heroku logs --tail
+99/Ajouter la DBsur Heroku , finaliser!: heroku propose un systeme de ADD-ON qui permet d'enrichir un projet avc different service (stockage ds datas, monitoring, ds outils d'analyse et de traitement de données etc...), ce qui ns intersse ajouter un ADD-On permettant l'ajout d'une DB un MariaDB sur Heroku
+L'ADD-on qui permet ça : JawsDB Maria sur heroku clicker sur le projet...ADD-ON...
+100/Se connect a la DB de Prod: on dispose d'une DB sur HEROKU, il est tps de la relier à notre APIRest, click sur overview pui sjawsDB Maria, puis modife du sequelize.js
+//necessaire de faire la distinction en tre la Prod & le dev ds sequelize.js, il ns reste une deerniere tache 
+101/Synchroniser ls données en Prod: actuellment au demarage de notre APIRest, on initialise la db grace à la methode sync et le param force
+2cas: Heroku passe le projet en mode sleep si personne ne l'utilise un certain moment et va le redémarrer si le user redemande une info, dans ce cas l'APIRest va redemarrer
+synch() pour ne pas modifier nos tabls existantes ne pas casser notre DB
 
 Conclusion:  APIRest en ligne et accessible de partt ds le mnde, deploiement d'une APIRest/serveur NodeJS/DB sr un serveur distant
 On sait comment adapter NodeJS a ds env different

@@ -3,22 +3,36 @@ const PokemonModel = require('../models/pokemon')
 const UserModel = require('../models/user') //Pr l'ajout d'un nouvel utilsateur en DB
 const pokemons = require('./mock-pokemon')
 const bcrypt = require('bcrypt')
-  
-const sequelize = new Sequelize('pokedex', 'root', '', {
-  host: 'localhost',
-  dialect: 'mariadb',
-  dialectOptions: {
-    timezone: 'Etc/GMT-2',
-  },
-  logging: false
-})
-  
+
+let sequelize //necessaire de faire la distinction en tre la Prod & le dev
+
+if(process.env.NODE_ENV === 'production'){
+  const sequelize = new Sequelize('oxo4lap656x36xe2', 'mzqhtzbri7whicuh', 'moyyickgoxfxd0v3', {
+    host: 'un0jueuv2mam78uv.cbetxkdyhwsb.us-east-1.rds.amazonaws.com',
+    dialect: 'mariadb',
+    dialectOptions: {
+      timezone: 'Etc/GMT-2',
+    },
+    logging: true
+  })
+}else{
+  sequelize = new Sequelize('pokedex', 'root', '', {
+    host: 'localhost',
+    dialect: 'mariadb',
+    dialectOptions: {
+      timezone: 'Etc/GMT-2',
+    },
+    logging: false
+  })
+}
+    
 const Pokemon = PokemonModel(sequelize, DataTypes)
 const User = UserModel(sequelize, DataTypes)
 //on instancie le model user aupres de Sequelize
   
 const initDb = () => {
-  return sequelize.sync({force: true}).then(_ => {
+  return sequelize.sync({force:true}).then(_ => { //on conserve à l'abris les données utilisateurs
+    console.log('INIT DB')
     pokemons.map(pokemon => {
       Pokemon.create({
         name: pokemon.name,
