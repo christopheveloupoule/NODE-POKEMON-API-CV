@@ -1,7 +1,9 @@
 const { Pokemon } = require('../db/sequelize')
+
+const auth = require('../auth/auth') //Import du MiddleWarre d'authent
   
 module.exports = (app) => {
-  app.delete('/api/pokemons/:id', (req, res) => {
+  app.delete('/api/pokemons/:id', auth, (req, res) => {
     Pokemon.findByPk(req.params.id).then(pokemon => { //recup le pok av de le suppr
       if(pokemon === null) {
         const message = `Le pokémon demandé n'existe pas. Réessayez avec un autre identifiant.`

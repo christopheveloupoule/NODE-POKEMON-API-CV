@@ -3,7 +3,7 @@ const { Pokemon } = require('../db/sequelize')
 //Import de l'opérateur Sequelize
 const { Op } = require('sequelize')
 
-const auth = require('../auth/auth')
+const auth = require('../auth/auth') //Import du MiddleWarre d'authent
   
 module.exports = (app) => { //export une fct qui prend en param l'appli express tt entiere
 //permet de def ls routes + simplement ds notre appli tt en ayant ds pts de terminaison 

@@ -225,11 +225,38 @@ et créer le jeton dans src/routes/login.js
 Chaque pt de terminaison à secure excepté le pt de terminaison de la connex°, il faudra dc passer pr un "MiddleWare" src/aut/aut.js
 authorization : Bearer <JWT>, on aura utilisé un middleware qui verifie la validité ds jetons transmis aux clients
 84/Securiser la liste des pokemons dans findAllPokemons.js , il faut import : const auth = require('../auth/auth')
-
+85/Securiser ts ls EndPoints : ttes les routes exceptés le login
 Conclusion : Utilisation de BCRYPTE et JSON WEB TOKEN ainsi que d'un Middleware dédié à la sécu ds notre APIRest, nos pts de teminaison uniquement accessible aux consommateurs authentifiés
+*********************************************************************************************************************************************
+Deploiement de notre APIRest sur HEROKU plateforme
+**********************************************************************************************************************************************
+86/Process de deploiement: 1/creer le projet sr la plateforme HEROKU (plateforme qui permet d'heberger gratuitement ds APIRest avc un DB MariaDB/ 
+2/Preparer le projet en local pr le deploiement (id en local sur notre machine, acces a la base de données SQL different à l'id sur la plateforme Heroku), pr repondre a cette probématique on utilisera des "variables d'envionnemment" propre à NodeJS - 3/ Deploiement de l'APIRest complet sur Heroku pr qu'elle soit access au monde entier
+87/Creer un compte sur Heroku
+88/Installer GIT / heroku CLI : utilitaire via la cde : sudo snap install --classic heroku
+91/Se connecter à la plateforme Heroku : cde "heroku login"
+92/Presentation des variables d'environnement: obj 'process' (contient les info° à propos de l'env. ds lequel le prog s'execute), process.env contient les fameuses variables d'environnement / require (oj global mis a idspo pr NodeJS) : fct que l'on utilise depuis le debut de notre developpement afin de recuperer un module JS ds le module crt. / __dirname : propriété qui retourne le chemin vers le dossier crt depuis lequel s'execute NodeJS (pratique lorsque l'on veut save ds fichier à un endroit précis de notre arbo) /Objet global module (method qui l'exporte par ex...) / global (qui represent l'enssmble de l'environnemnt d'execution Node JS)
+Ce qui ns interesse uniquement le process.env pr accéder aux variables d'environnement.
+test.js | cde : node test.js, on sait maintenant ou se trouve ttes les variables d'environnements renvoyé par NodeJS et qui concerne en partie notre poste de travail,ns allons savoir comment ns en servir ds un env de production
+93/Var.Env en Prod: 
+dev port 5001 | prod : dynamique (via la plateforme Heroku) 
+La problematique est de savoir "console.log(prcess.env.PORT) undefined en local mais a une valeur dynamique sur heroku en Prod
+On peut maintenant supprimer le test.js
+94/Demarrer l'APIRest sur un port dnamique
+95/Preparer notre API pr la Prod: 
+1/ Ne plus utiliser Nodemon: Prratique au depart mais gourmand en ressource...se debarasser en Prod!
+"dev": "nodemon app.js" , Pr demarrer notre APIRest 'npm run dev' | "start": "node app.js", via 'npm run start' pr la Prod
+2/ possibilité de Passer 'Express' en mode production : node_env
+3/Heroku n'installe ps ds dependances de dev. : reflechir au dependance morgan(pr illustré le fct ds middleware on va dc le suppr du package.json et ds l'app.js) et nodemon installé ds le package.json
+96/Ajouter un pt de terminaison "Hello Heroku" (affichage sur le web )
+97/Heberger une APIRest sur Heroku: on procede au deploiement via heroku CLI :on creéer et save le .gitignore à la racine
+98/
+99/
+100/
 
-
-
+Conclusion:  APIRest en ligne et accessible de partt ds le mnde, deploiement d'une APIRest/serveur NodeJS/DB sr un serveur distant
+On sait comment adapter NodeJS a ds env different
+Heroku: serveur pr ls dev
 
 
 
