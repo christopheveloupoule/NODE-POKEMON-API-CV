@@ -2,11 +2,13 @@
 const { Pokemon } = require('../db/sequelize')
 //Import de l'opérateur Sequelize
 const { Op } = require('sequelize')
+
+const auth = require('../auth/auth')
   
 module.exports = (app) => { //export une fct qui prend en param l'appli express tt entiere
 //permet de def ls routes + simplement ds notre appli tt en ayant ds pts de terminaison 
 //separé ds pls modules distinct
-  app.get('/api/pokemons', (req, res) => {
+  app.get('/api/pokemons', auth, (req, res) => {
     if(req.query.name) { //indique a express d'extraire le param 'name' de l'url
       const name = req.query.name
       const limit = parseInt(req.query.limit) || 5

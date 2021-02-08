@@ -1,6 +1,6 @@
 const { Sequelize, DataTypes } = require('sequelize')
 const PokemonModel = require('../models/pokemon')
-const UserModel = require('../models/user')
+const UserModel = require('../models/user') //Pr l'ajout d'un nouvel utilsateur en DB
 const pokemons = require('./mock-pokemon')
 const bcrypt = require('bcrypt')
   

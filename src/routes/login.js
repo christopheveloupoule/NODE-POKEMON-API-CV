@@ -8,7 +8,7 @@ module.exports = (app) => {
 //METHOD 'findOne' : req pr determiner les infos d'un user
     User.findOne({ where: { username: req.body.username } }).then(user => {
 
-        if(!user) { //ident
+        if(!user) { //ident de notre client de notre APIRest
             const message = `L'utilisateur demandé n'existe pas.`
             return res.status(404).json({ message })
         }
@@ -17,7 +17,7 @@ module.exports = (app) => {
       bcrypt.compare(req.body.password, user.password).then(isPasswordValid => {
         if(!isPasswordValid) { //eventualite de mot de passe erroné
             const message = `Le mot de passe est incorrect.`
-            return res.status(401).json({message})
+            return res.status(401).json({message}) //user n'a pas le droite d'accès aux ressources demandés
           }
 
 // Générer un jeton JWT valide pendant 24 heures.

@@ -11,10 +11,10 @@ module.exports = (req, res, next) => {
 
   if(!authorizationHeader) {
     const message = `Vous n'avez pas fourni de jeton d'authentification. Ajoutez-en un dans l'en-tête de la requête.`
-    return res.status(401).json({ message })
+    return res.status(401).json({ message }) //expliquer au user pq il n'a pas le droit d'accéder au pt de terminaison
   }
   
-  const token = authorizationHeader.split(' ')[1]
+  const token = authorizationHeader.split(' ')[1] //recuperation du jeton JWT envoyé par le user dans une cst token
   const decodedToken = jwt.verify(token, privateKey, (error, decodedToken) => {//METHOD VERIFY
     if(error) {
       const message = `L'utilisateur n'est pas autorisé à accèder à cette ressource.`

@@ -192,8 +192,39 @@ Permettre au user de search un pok pr sn name EXACT sinon pas de renvoi de res (
 Tjs dans findAllPokemons.js, 
 74/Conlusion : Req inutile à la DB à eviter, on a vu beaucoup de fonctionnalité permise pr express et sequelize
 ***********************************************************
-Authentification
+SECUTRITE & Authentification (JWT)
 ***********************************************************
+75/Rentrer ls identifiant coté utilisateur pr consulter la liste des pok,il aura alors le droit d'ajouter, modif,supp un pok,sinn on aura le droit de lui refuser l'accès à notre APIRest.
+2 exigences: Encrypter le PWD ds users | securiser l'echange ds datas (verif si le user a ls bons droits)
+76/Creer un modele pr le user: comparer des id ext à notre APIRest envoyé pr les users avc ls identifiant déja present en DB,on va dc creer un nouveau modele Sequelize nommé 'user' qui va modeliser un utilisateur ds notre APIRest
+On creer un file user.js
+77/Ajout de la contrainte d'unicité 'user.js':  Fournir un identifiant unique (email ou pseudo) | ajout d'une contrainte d'unicité au user | PWD
+78/Save un utilisateur & Encryptage ds utilisateur qui s'authentifie sr notre APIRest: Aucun utilisateur pr le moment en DB, on va donc pousser un utilisateur en DB pr pouvoir effectuer qqs tests sr notre authentif pr la suite (sequelize.fr)
+Pr encrypter un PWD (aide de l'ecosysteme), il existe deja ds modules comme bcrypt que l'on va install ds notre APIRest pr pouvoir securisé ls PWD des utilisateurs
+npm install bcrypt --save, on aura un module bcrypt qui utilise un algo interne, pr encrypter les données du user ss forme d'un hash pour save ds la DB de manière sur. Lors de tentative de connexion du user,bcrypt va crypté ce new pwd envoyé par le user afin de le comparer avc celui en DB, si les 2 PWD identiques, alors 'bcrypt' le signalera et le user  pourra accéder aux autres points de terminaison de l'APIRest
+Encryptage du PWD du user dans le module 'Sequelize.js'
+79/Creer la route de connexion: Desormais on a un user et PWD encrypté ds notre DB mais il faut à l'utilisateur un moyen pr s'autentifier (pt de terminaison à créer) d'ou la création de src/routes/login.js et definir le pt de terminaison dans app.js
+80/Gerer les cas d'err de connex° (src/routes/login.js): 2 types d'err possible, si le user ne saisit pas un identifiant correct, dans ce cas on indique au user que son id n'existe pas puisque ns ne le trouvons pas ds notre DB
+2eme cas: le client rentre un id correct mais un mauvais PWD
+81/Concept de jeton JWT: D'abord on a encrypté les PWD via le module 'bcrypt',ensuite pr sécuriser l'echange ds datas, on s'interessera au jeton JWT plus exactement le JSON Web Token (authentif entre l'appli web et l'APIRest).
+Le jeton JWT est une clé cryptée, avc une durée de validité ds le tps ss forme de str.
+Etape 1: client tente de se logguer à notre APIRest en effectuant une 'req' (ID+PWD)
+Etape2: Verife si ID et PWD correct via le module bcrypt, si oui APIRest renvoi un jeton JWT valide au client sinn on retourne un mess d'err
+Etape 3 : Grace au jeton recupérer, le client peut effectuer des 'req' sécurisées vrs ls pts de terminaisons de notre APIRest
+Etape 4: si le jeton JWT est valide, alors on va devoir renvoyer ls données demandés au clients (res), sinn acces aux données refusés
+Conclusion: le fonctionnment 'une authentife APIRest est maintenant plus clair
+Pr mettre en place l'authentif JWT, il faut d'abord générer des jetons JWT pr ls clients, les receptionnés ds ns pts de terminaisons pr indiquer s'ils snt valide ou nn a chaque fois
+82/Générer un jeton JWT (rassemblé 3informat° differentes apres le lancement de la cde): Mettre notre APIRest avc ls dernieres normes de secure en regle grace au jeton JWT, on va donc install un nouveau module JSONWebToken
+cde: npm install jsonwebtoken --save
+1/3 Informations du user: il s'agit de l'ID unique du USER permettant de creer un jeton uniquemnt valide pr ce client et pas un autre.
+2/3 clé secrete(ss forme de 'str') pr renforcer la sécurité, on utilise une clé secrete externe lors du cryptage du jeton
+3/3: date de validité pr le jeton: une fois le jeton périmée, il ne peut plus etre utiliser pr s'authentfier sr notre APIRest
+POur commencer à créer une clé secrete : src/auth/private_key.js
+et créer le jeton dans src/routes/login.js
+83/Verif du jeton JWT : une fois le jeton valide retourner, il faut secure les echanges entre le client et l'APIRest.
+Chaque pt de terminaison à secure excepté le pt de terminaison de la connex°, il faudra dc passer pr un "MiddleWare" src/aut/aut.js
+authorization : Bearer <JWT>, on aura utilisé un middleware qui verifie la validité ds jetons transmis aux clients
+84/Securiser la liste des pokemons dans findAllPokemons.js , il faut import : const auth = require('../auth/auth')
 
 Conclusion : Utilisation de BCRYPTE et JSON WEB TOKEN ainsi que d'un Middleware dédié à la sécu ds notre APIRest, nos pts de teminaison uniquement accessible aux consommateurs authentifiés
 
