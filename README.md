@@ -263,10 +263,13 @@ L'ADD-on qui permet ça : JawsDB Maria sur heroku clicker sur le projet...ADD-ON
 101/Synchroniser ls données en Prod: actuellment au demarage de notre APIRest, on initialise la db grace à la methode sync et le param force
 2cas: Heroku passe le projet en mode sleep si personne ne l'utilise un certain moment et va le redémarrer si le user redemande une info, dans ce cas l'APIRest va redemarrer
 synch() pour ne pas modifier nos tabls existantes ne pas casser notre DB
-
 Conclusion:  APIRest en ligne et accessible de partt ds le mnde, deploiement d'une APIRest/serveur NodeJS/DB sr un serveur distant
 On sait comment adapter NodeJS a ds env different
 Heroku: serveur pr ls dev
-
-
+*********************************************************************************************************************
+Ajouter une appli web
+*********************************************************************************************************************
+102/Mise en place ds CORS notre APIRest : npm install cors --save
+On va utliser ce paquet pr implémenter la norme Cors ds notre APIRest. ce paquet Cors s'utilise comme un middlewarre.
+La norme Cors s'applique à un enssemble de pt de terminaison d'une APIRest (app.js)
 

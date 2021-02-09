@@ -6,6 +6,7 @@ const express = require('express')
 const favicon = require('serve-favicon') //Import du middleWare serve-favicon
 const bodyParser = require('body-parser') //Import du middleWare body-parser data JSON
 const sequelize = require('./src/db/sequelize') //on le recupe en passant pr notre module sequelize
+const cors = require('cors')
 
 const app = express() //creat° d'une instance de l'appli express grace à la METHOD du meme nom
 const port = process.env.PORT || 5001 // On doit prendre en compte la variable d'env PORT en Prod et 5001 en local
@@ -16,6 +17,7 @@ app
   .use(favicon(__dirname + '/favicon.ico'))
   //.use(morgan('dev'))
   .use(bodyParser.json())  // on parse ttes les données entrantes vers notre APIREST
+  .use(cors())
 
 sequelize.initDb() //On appelle la METHOD initDb appelé precedemmnt
 
