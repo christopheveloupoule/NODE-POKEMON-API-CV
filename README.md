@@ -1,20 +1,26 @@
 # NODE-POKEMON-API-CV
 
-1/Mise en place du Package.json (decrire le project - lister les dependances)
-commande : npm init (on renseigne les champs)
-on change le script "start": "node app.js" (app.js sera notre 1er pt d'entrée)
-Execution de la cde ds le terminal : npm run start
-2/Installation Express: npm install express --save
-3/Mise en place d'un place d'un point de terminaison ds le App.js
-4/Utilisation de nodemon (pr eviter de couper et relancer la meme cde)
-cde : npm install nodemon --save-dev
-puis npm run start ou nodemon app.js
-********************************************************
+Dev : 'npm run dev' | Prod: 'npm run start'
+PHPadmin manip
+
+***************************************************************************************************************
+Premiers pas avec Node.js
+***************************************************************************************************************
+1/Install de NodeJS : la LTS
+Express est un paquet de JS comme un autre
+Vrife de la version : node -v | npm -v
+2/Demarrer un projet: Creation du dossier NODE-POKEMON-API-CV puis du point d'entrée 'app.js'
+3/Configurer NodeJS : 'package.json' (decrit le projet et liste ls dépendances pr construire notre APIRest) via 'npm init'
+configurer le script, pour l'executer: npm run start
+4/ Install d'express : npm install express --save, creation du 'package-lock.json" et "node_modules"
+5/Hello express: Installation d'un pt de terminaison via app.get... req, res..., uis npm run start
+ (nodemon a la rescousse...npm install nodemon --save-dev)
+****************************************************************************************************************
 Decouverte ds routes
-*******************************************************
+*****************************************************************************************************************
 5/ls bases : Ajout ds pts de terminaison à notre APIRESt via des routes
 pt de terminaison Express = app.METHODE(CHEMIN,GESTIONNAIRE(req,res))
-app:instance de notre appli express / METHODE http :get,post,put,delete / GESTIONNAIRE: retourne une repose au client
+app:instance de notre appli express / METHODE http :get,post,put,delete / GESTIONNAIRE: retourne une 'rep' au client
 Ex: Retourner le pokemon Bulbizzare (app_bis.js)
 6/Passer un param depuis l'url : const id = req.params.id
 7/Gerer plus params: app.get('/api/pokemons/:id/:name'...
@@ -89,7 +95,7 @@ cde : npm install mariadb --save,
 maintenant Sequelize fait parti intégrante de notre APIRest
 Pr verif si Sequelize et le driver pr MariaDB a bien été installé, voir le package.json
 33/Connecter Sequelize, MariaDB et notre APIRest qu'il faut assembler pr obtenir un result,
-pr le moment Sequelize ds le folder nodemoudle de l'APIRest et MariaDB qq part sr notre poste de travail via XAMPP.
+pr le moment Sequelize ds le folder nodemodule de l'APIRest et MariaDB qq part sr notre poste de travail via XAMPP.
 Sequelize tres simple de config pr la connec a une DB en 3 etapes, 
 ds le fichier app.js : 1/import du module Sequelize 2/Config et creer une inst de la class Sequelize 3/Test l'authentif via la METHOD aunthenticate() ss forme de promess..
 *************************************************************
@@ -192,7 +198,7 @@ Permettre au user de search un pok pr sn name EXACT sinon pas de renvoi de res (
 Tjs dans findAllPokemons.js, 
 74/Conlusion : Req inutile à la DB à eviter, on a vu beaucoup de fonctionnalité permise pr express et sequelize
 ***********************************************************
-SECUTRITE & Authentification (JWT)
+SECURITE & Authentification (JWT)
 ***********************************************************
 75/Rentrer ls identifiant coté utilisateur pr consulter la liste des pok,il aura alors le droit d'ajouter, modif,supp un pok,sinn on aura le droit de lui refuser l'accès à notre APIRest.
 2 exigences: Encrypter le PWD ds users | securiser l'echange ds datas (verif si le user a ls bons droits)
@@ -272,4 +278,6 @@ Ajouter une appli web
 102/Mise en place ds CORS notre APIRest : npm install cors --save
 On va utliser ce paquet pr implémenter la norme Cors ds notre APIRest. ce paquet Cors s'utilise comme un middlewarre.
 La norme Cors s'applique à un enssemble de pt de terminaison d'une APIRest (app.js)
+Apres avoir MAJ le app.js on push sur git (git push heroku main), on va maintenant tenter de brancher une appli WEB directement pr dessus notre appli Web
+103/Ajouter une appli JS : 
 

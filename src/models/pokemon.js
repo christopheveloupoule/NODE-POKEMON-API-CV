@@ -9,12 +9,13 @@ Le second param DataTypes qui permet de def ls types de données de
 chaque propiété de notre modèle*/
 
 /*Param DataTypes*/
-
-module.exports = (sequelize, DataTypes) => {
-    return sequelize.define('Pokemon', { /*La METHOD 'DEFINE' proposé pr Sequelize 
+/*La METHOD 'DEFINE' proposé pr Sequelize 
 //prends 3 params afin de mettre en place un nouveau 'model'
 Cette METHOD est importante cr Sequelize se base ls 'model' que ns declarons
 pour construire ls tables ds la db SQL pr la suite*/
+
+module.exports = (sequelize, DataTypes) => {
+    return sequelize.define('Pokemon', { 
       id: {
         type: DataTypes.INTEGER,
         primaryKey: true, //clé primaire de notre table
